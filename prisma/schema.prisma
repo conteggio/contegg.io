@@ -9,3 +9,43 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Game {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  bggId       Int?
+  Plays       Play[]
+}
+
+model Play {
+  id       Int          @id @default(autoincrement())
+  game     Game         @relation(fields: [gameId], references: [id])
+  gameId   Int
+  sessions Session[]
+  players  PlayerPlay[]
+}
+
+model Session {
+  id         Int       @id @default(autoincrement())
+  play       Play      @relation(fields: [playId], references: [id])
+  playId     Int
+  startedAt  DateTime?
+  finishedAt DateTime?
+}
+
+model Player {
+  id    Int          @id @default(autoincrement())
+  name  String
+  plays PlayerPlay[]
+}
+
+model PlayerPlay {
+  player   Player @relation(fields: [playerId], references: [id])
+  playerId Int
+  play     Play   @relation(fields: [playId], references: [id])
+  playId   Int
+  score    Float?
+
+  @@id([playerId, playId])
+}
