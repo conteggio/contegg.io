@@ -1,0 +1,30 @@
+import prisma from '$lib/server/prisma';
+import type { Play } from '@prisma/client';
+import { error } from '@sveltejs/kit';
+import type { LayoutServerLoad } from '../$types';
+export const load = (async ({ params }) => {
+	const play: Play | null = await prisma.play.findUnique({
+		where: {
+			id: Number(params.id)
+		},
+		include: {
+			sessions: true,
+			players: {
+				include: {
+					player: true
+				},
+				orderBy: {
+					score: 'desc'
+				}
+			}
+		}
+	});
+
+	if (!play) {
+		throw error(404, 'Play not found');
+	}
+
+	return {
+		play
+	};
+}) satisfies LayoutServerLoad;
