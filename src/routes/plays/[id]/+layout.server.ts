@@ -1,9 +1,8 @@
 import prisma from '$lib/server/prisma';
-import type { Play } from '@prisma/client';
 import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from '../$types';
 export const load = (async ({ params }) => {
-	const play: Play | null = await prisma.play.findUnique({
+	const play = await prisma.play.findUnique({
 		where: {
 			id: Number(params.id)
 		},

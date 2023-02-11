@@ -1,11 +1,13 @@
 import prisma from '$lib/server/prisma';
-import type { Game } from '@prisma/client';
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from '../$types';
 export const load = (async ({ params }) => {
-	const game: Game | null = await prisma.game.findUnique({
+	const game = await prisma.game.findUnique({
 		where: {
 			id: Number(params.id)
+		},
+		include: {
+			plays: true
 		}
 	});
 
@@ -16,4 +18,4 @@ export const load = (async ({ params }) => {
 	return {
 		game
 	};
-}) satisfies PageServerLoad;
+}) satisfies LayoutServerLoad;

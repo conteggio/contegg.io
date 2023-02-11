@@ -1,14 +1,17 @@
 <script lang="ts">
-	import type { LayoutData } from './$types';
+	import type { LayoutData, PageData } from './$types';
 
-	export let data: LayoutData;
-	const { play } = data;
+	export let data: PageData | LayoutData;
+	const { play, players } = data;
+
+	const existingPlayers = play.players.map(({ playerId }) => playerId);
+	let selectedPlayers: number[] = existingPlayers;
 </script>
 
 <div class="w-full flex flex-row justify-between">
 	<h1>Play</h1>
 	<div class="flex space-x-2">
-		<label for="delete-player-modal" class="btn btn-ghost btn-square">
+		<label for="delete-play-modal" class="btn btn-ghost btn-square">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
@@ -25,70 +28,60 @@
 	</div>
 </div>
 
-<h2>Players</h2>
+<h2>Scoreboard</h2>
 <div class="not-prose overflow-x-auto">
-	<table class="table w-full">
-		<!-- head -->
-		<thead>
-			<tr>
-				<th />
-				<th>Name</th>
-				<th class="text-right">Score</th>
-				<th />
-			</tr>
-		</thead>
-		<tbody>
-			<!-- row 1 -->
-			<tr>
-				<th>1</th>
-				<td class="flex items-center gap-2">
-					Geoff Dick
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-						fill="#ffdb58"
-						class="w-4 h-4"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M10 1c-1.828 0-3.623.149-5.371.435a.75.75 0 00-.629.74v.387c-.827.157-1.642.345-2.445.564a.75.75 0 00-.552.698 5 5 0 004.503 5.152 6 6 0 002.946 1.822A6.451 6.451 0 017.768 13H7.5A1.5 1.5 0 006 14.5V17h-.75C4.56 17 4 17.56 4 18.25c0 .414.336.75.75.75h10.5a.75.75 0 00.75-.75c0-.69-.56-1.25-1.25-1.25H14v-2.5a1.5 1.5 0 00-1.5-1.5h-.268a6.453 6.453 0 01-.684-2.202 6 6 0 002.946-1.822 5 5 0 004.503-5.152.75.75 0 00-.552-.698A31.804 31.804 0 0016 2.562v-.387a.75.75 0 00-.629-.74A33.227 33.227 0 0010 1zM2.525 4.422C3.012 4.3 3.504 4.19 4 4.09V5c0 .74.134 1.448.38 2.103a3.503 3.503 0 01-1.855-2.68zm14.95 0a3.503 3.503 0 01-1.854 2.68C15.866 6.449 16 5.74 16 5v-.91c.496.099.988.21 1.475.332z"
-							clip-rule="evenodd"
-						/>
-					</svg></td
-				>
-				<td class="text-right">5</td>
-				<td class="text-right"
-					><button class="btn btn-ghost btn-square">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="currentColor"
-							class="w-6 h-6"
+	{#if play.players.length}
+		<table class="table w-full">
+			<!-- head -->
+			<thead>
+				<tr>
+					<th />
+					<th>Name</th>
+					<th>Score</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each play.players as player (player.playerId)}
+					<tr>
+						<th>1</th>
+						<td>
+							<div class="flex items-center gap-2">
+								{player.player.name}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 20 20"
+									fill="#ffdb58"
+									class="w-4 h-4"
+								>
+									<path
+										fill-rule="evenodd"
+										d="M10 1c-1.828 0-3.623.149-5.371.435a.75.75 0 00-.629.74v.387c-.827.157-1.642.345-2.445.564a.75.75 0 00-.552.698 5 5 0 004.503 5.152 6 6 0 002.946 1.822A6.451 6.451 0 017.768 13H7.5A1.5 1.5 0 006 14.5V17h-.75C4.56 17 4 17.56 4 18.25c0 .414.336.75.75.75h10.5a.75.75 0 00.75-.75c0-.69-.56-1.25-1.25-1.25H14v-2.5a1.5 1.5 0 00-1.5-1.5h-.268a6.453 6.453 0 01-.684-2.202 6 6 0 002.946-1.822 5 5 0 004.503-5.152.75.75 0 00-.552-.698A31.804 31.804 0 0016 2.562v-.387a.75.75 0 00-.629-.74A33.227 33.227 0 0010 1zM2.525 4.422C3.012 4.3 3.504 4.19 4 4.09V5c0 .74.134 1.448.38 2.103a3.503 3.503 0 01-1.855-2.68zm14.95 0a3.503 3.503 0 01-1.854 2.68C15.866 6.449 16 5.74 16 5v-.91c.496.099.988.21 1.475.332z"
+										clip-rule="evenodd"
+									/>
+								</svg>
+							</div></td
 						>
-							<path
-								fill-rule="evenodd"
-								d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+						<td><input type="number" name="score" value={player.score} class="input" /></td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	{:else}
+		<p>Add one or more players to start keeping score.</p>
+	{/if}
 </div>
-<button class="btn btn-primary mt-6">Manage Players</button>
+<label for="manage-players-modal" class="btn btn-primary mt-6">Manage Players</label>
 
 <h2>Sessions</h2>
 
-<input type="checkbox" id="delete-player-modal" class="modal-toggle" />
+<input type="checkbox" id="delete-play-modal" class="modal-toggle" />
 <div class="modal not-prose">
 	<div class="modal-box">
 		<h3 class="font-bold text-lg">Are you sure you want to delete this play?</h3>
 		<p class="py-4">By deleting this play, you will lose all play data and sessions.</p>
 		<div class="modal-action">
-			<label for="delete-player-modal" class="btn btn-outline">Nevermind</label>
-			<form method="POST" action="/players?/delete">
+			<label for="delete-play-modal" class="btn btn-outline">Nevermind</label>
+			<form method="POST" action="/plays?/delete">
 				<input name="id" type="hidden" value={play.id} />
 				<button class="btn btn-error">Delete Play</button>
 			</form>
@@ -99,14 +92,38 @@
 <input type="checkbox" id="manage-players-modal" class="modal-toggle" />
 <div class="modal not-prose">
 	<div class="modal-box">
-		<h3 class="font-bold text-lg">Select Players</h3>
-		<p class="py-4">By deleting this play, you will lose all play data and sessions.</p>
-		<div class="modal-action">
-			<label for="manage-players-modal" class="btn btn-outline">Nevermind</label>
-			<form method="POST" action="/players?/delete">
-				<input name="id" type="hidden" value={play.id} />
-				<button class="btn btn-error">Delete Play</button>
-			</form>
-		</div>
+		<form method="POST" action="?/updatePlayers">
+			<h3 class="font-bold text-lg">Select Players</h3>
+			<div class="flex flex-col gap-2 mt-4">
+				{#each players as { name, id } (id)}
+					<label for={id} class="hover:cursor-pointer">
+						<div
+							class="card card-compact bg-base-200 hover:bg-base-300 transition-color duration-200 ease-in-out"
+						>
+							<div class="card-body !py-3">
+								<div class="flex justify-between items-center">
+									<h2 class="card-title line-clamp-1">{name}</h2>
+									<input
+										type="checkbox"
+										bind:group={selectedPlayers}
+										{id}
+										value={id}
+										checked={play.players.some((player) => player.playerId === id)}
+										class="checkbox checked:checkbox-success"
+									/>
+								</div>
+							</div>
+						</div>
+					</label>
+				{/each}
+			</div>
+			<input type="hidden" name="existingPlayers" value={existingPlayers} />
+			<input type="hidden" name="selectedPlayers" value={selectedPlayers} />
+			<input type="hidden" name="playId" value={play.id} />
+			<div class="modal-action">
+				<label for="manage-players-modal" class="btn btn-outline">Nevermind</label>
+				<button type="submit" class="btn btn-success">Save Changes</button>
+			</div>
+		</form>
 	</div>
 </div>

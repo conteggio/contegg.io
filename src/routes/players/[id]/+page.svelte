@@ -56,6 +56,9 @@
 	</div>
 </div>
 <h2>Plays</h2>
+{#each player.plays as play (play.playId)}
+	<p>{play.play.game.name}</p>
+{/each}
 
 <input type="checkbox" id="delete-player-modal" class="modal-toggle" />
 <div class="modal not-prose">

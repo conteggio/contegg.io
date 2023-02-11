@@ -1,15 +1,14 @@
 <script lang="ts">
-	import type { PageData, ActionData } from './$types';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
-	export let form: ActionData;
 	const { game } = data;
 </script>
 
 <div class="w-full flex flex-row justify-between">
 	<h1>{game.name}</h1>
 	<div class="flex space-x-2">
-		<button class="btn btn-ghost btn-square">
+		<a href={`/games/${game.id}/edit`} class="btn btn-ghost btn-square">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
@@ -20,7 +19,7 @@
 					d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
 				/>
 			</svg>
-		</button>
+		</a>
 		<label for="delete-game-modal" class="btn btn-ghost btn-square">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -57,6 +56,9 @@
 	</div>
 </div>
 <h2>Plays</h2>
+{#each game.plays as play (play.id)}
+	<p>{play.createdAt}</p>
+{/each}
 
 <input type="checkbox" id="delete-game-modal" class="modal-toggle" />
 <div class="modal not-prose">
