@@ -22,18 +22,18 @@
 		});
 
 		// Add a way to get home too.
-		crumbs.unshift({ label: 'Home', href: '/' });
+		crumbs.unshift({ label: 'home', href: '/' });
 	}
 </script>
 
 <div class="not-prose breadcrumbs mb-16 py-0">
 	<ul>
 		{#each crumbs as { label, href }, i}
-			<li class="capitalize">
+			<li data-testid={`${label}-crumb`} class="capitalize">
 				{#if i == crumbs.length - 1}
 					{label}
 				{:else}
-					<a {href}>{label}</a>
+					<a data-testid={`${label}-link`} {href}>{label}</a>
 				{/if}
 			</li>
 		{/each}
