@@ -2,11 +2,15 @@
 	import type { LayoutData, PageData } from './$types';
 
 	export let data: PageData | LayoutData;
-	const { play, players } = data;
+	const { play, players, scoreboard } = data;
 
 	const existingPlayers = play.players.map(({ playerId }) => playerId);
 	let selectedPlayers: number[] = existingPlayers;
 </script>
+
+{#each scoreboard as board (board.playerId)}
+	<p>{board.score_rank}</p>
+{/each}
 
 <div class="w-full flex flex-row justify-between">
 	<h1>Play</h1>
@@ -61,7 +65,31 @@
 								</svg>
 							</div></td
 						>
-						<td><input type="number" name="score" value={player.score} class="input" /></td>
+						<td>
+							<form method="POST" action="?/updateScore">
+								<input type="hidden" name="playId" value={player.playId} />
+								<input type="hidden" name="playerId" value={player.playerId} />
+								<div class="form-control">
+									<div class="input-group">
+										<input type="number" name="score" value={player.score} class="input" />
+										<button type="submit" class="btn btn-square">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												viewBox="0 0 24 24"
+												fill="currentColor"
+												class="w-6 h-6"
+											>
+												<path
+													fill-rule="evenodd"
+													d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z"
+													clip-rule="evenodd"
+												/>
+											</svg>
+										</button>
+									</div>
+								</div>
+							</form>
+						</td>
 					</tr>
 				{/each}
 			</tbody>

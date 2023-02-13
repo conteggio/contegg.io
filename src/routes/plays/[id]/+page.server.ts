@@ -1,11 +1,11 @@
 import prisma from '$lib/server/prisma';
-import type { Play } from '@prisma/client';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load = (async () => {
+export const load = (async ({ params }) => {
 	return {
-		players: await prisma.player.findMany()
+		players: await prisma.player.findMany(),
+		scoreboard: await prisma.play.findScoreboard(Number(params.id))
 	};
 }) satisfies PageServerLoad;
 
@@ -107,6 +107,36 @@ export const actions: Actions = {
 		}
 
 		return { success: true };
+	},
+	updateScore: async ({ request }) => {
+		const data = await request.formData();
+		let playId = data.get('playId');
+		let playerId = data.get('playerId');
+		let score = data.get('score');
+
+		if (!playId) {
+			return fail(400, { playId, missing: true });
+		}
+
+		if (!playerId) {
+			return fail(400, { playerId, missing: true });
+		}
+
+		if (!score) {
+			return fail(400, { score, missing: true });
+		}
+
+		const updatedPlay = await prisma.playerPlay.update({
+			where: {
+				playerId_playId: {
+					playId: Number(playId),
+					playerId: Number(playerId)
+				}
+			},
+			data: {
+				score: Number(score)
+			}
+		});
 	},
 	delete: async ({ request }) => {
 		const data = await request.formData();
