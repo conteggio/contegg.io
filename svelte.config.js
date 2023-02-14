@@ -8,7 +8,12 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+
+		// Allow cross-orgin post requests in GitPod
+		csrf: {
+			checkOrigin: false
+		}
 	}
 };
 

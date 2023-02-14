@@ -6,7 +6,7 @@
 </script>
 
 <h1>Edit Game</h1>
-<form method="POST" action="?/update">
+<form method="POST" action="?/update" class="flex flex-col gap-6 items-start">
 	<input type="hidden" name="id" value={game.id} />
 	<div class="form-control w-full">
 		<label for="name" class="label">

@@ -14,7 +14,7 @@
 	{#each games as game (game.id)}
 		<a href={`/games/${game.id}`}>
 			<div
-				class="card card-compact bg-base-200 hover:bg-base-300 hover:-mr-2 transition-all duration-200 ease-in-out"
+				class="card card-compact bg-base-200 hover:bg-base-100 transition-color duration-200 ease-in-out"
 			>
 				<div class="card-body">
 					<div>

@@ -10,7 +10,12 @@
 <form method="POST" action="?/create">
 	<div class="form-control">
 		<div class="input-group">
-			<input type="text" name="name" placeholder="Add a new player..." class="input bg-base-200" />
+			<input
+				type="text"
+				name="name"
+				placeholder="Add a new player..."
+				class="input bg-base-200 focus:outline-none focus:bg-base-100"
+			/>
 			<button class="btn btn-square">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +37,7 @@
 	{#each players as player (player.id)}
 		<a href={`/players/${player.id}`}>
 			<div
-				class="card card-compact bg-base-200 hover:bg-base-300 hover:-mr-2 transition-all duration-200 ease-in-out"
+				class="card card-compact bg-base-200 hover:bg-base-100 transition-color duration-200 ease-in-out"
 			>
 				<div class="card-body">
 					<div>

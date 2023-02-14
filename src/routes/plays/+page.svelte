@@ -9,7 +9,10 @@
 <form method="POST" action="?/create">
 	<div class="form-control w-full max-w-xs">
 		<div class="input-group">
-			<select name="gameId" class="select bg-base-200">
+			<select
+				name="gameId"
+				class="select bg-base-200 focus:outline-none focus:bg-base-100 max-w-xs"
+			>
 				<option hidden selected>Pick a game to play...</option>
 				{#each games as game (game.id)}
 					<option value={game.id} class="w-full overflow-hidden">{game.name}</option>
@@ -23,12 +26,15 @@
 	{#each plays as play (play.id)}
 		<a href={`/plays/${play.id}`}>
 			<div
-				class="card card-compact bg-base-200 hover:bg-base-300 hover:-mr-2 transition-all duration-200 ease-in-out"
+				class="card card-compact bg-base-200 hover:bg-base-100 transition-color duration-200 ease-in-out"
 			>
 				<div class="card-body">
 					<div>
 						<h2 class="card-title line-clamp-1">{play.game.name}</h2>
-						<p><span class="badge badge-success">Finished</span> {play.createdAt}</p>
+						<p>
+							<span class="badge badge-success">Finished</span>
+							{play.createdAt.toLocaleDateString()}
+						</p>
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, type PlayerPlay } from '@prisma/client';
+
+export type PlayerWithPlace = PlayerPlay & {
+  place: number
+  name: string
+}
 
 let prismaClient: PrismaClient;
 
@@ -7,18 +12,20 @@ prismaClient = new PrismaClient();
 const prisma = prismaClient.$extends({
 	model: {
 		play: {
-			async findScoreboard(id: number) {
-				const scoreboard = await prisma.$queryRaw`
+			async findPlayersWithScores(id: number) {
+				const players: PlayerWithPlace[] = await prisma.$queryRaw`
                     select
-                        *,
-                        RANK () OVER ( 
-                            ORDER BY score DESC
-                        ) score_rank 
-                    from PlayerPlay
-                    where
-                        playId = ${id}
+                        pp.*,
+                        p.name,
+                        rank () over ( 
+                            order by score desc
+                        ) place
+                    from PlayerPlay as pp
+                    join Player as p
+                    on pp.playerId = p.id
+                    where playId = ${id};
                 `;
-				return scoreboard;
+				return players;
 			}
 		}
 	}
