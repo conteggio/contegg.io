@@ -4,8 +4,8 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
 	return {
-		players: await prisma.player.findMany(),
-		scoreboard: await prisma.play.findScoreboard(Number(params.id))
+		allPlayers: await prisma.player.findMany(),
+		players: await prisma.play.findPlayersWithScores(Number(params.id))
 	};
 }) satisfies PageServerLoad;
 

@@ -7,15 +7,8 @@ export const load = (async ({ params }) => {
 			id: Number(params.id)
 		},
 		include: {
+      game: true,
 			sessions: true,
-			players: {
-				include: {
-					player: true
-				},
-				orderBy: {
-					score: 'desc'
-				}
-			}
 		}
 	});
 

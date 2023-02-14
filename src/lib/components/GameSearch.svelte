@@ -9,7 +9,7 @@
 				type="text"
 				name="q"
 				placeholder="Search for a new game..."
-				class="input bg-base-200"
+				class="input bg-base-200 focus:outline-none focus:bg-base-100"
 				{value}
 			/>
 			<button class="btn btn-square">
