@@ -14,9 +14,14 @@
 	{#each games as game (game.id)}
 		<a href={`/games/${game.id}`}>
 			<div
-				class="card card-compact bg-base-200 hover:bg-base-100 transition-color duration-200 ease-in-out"
+				class="card card-side card-compact bg-base-200 hover:bg-base-100 transition-color duration-200 ease-in-out overflow-hidden"
 			>
-				<div class="card-body">
+				{#if game.bggThumbnail}
+					<div class="aspect-[6/4] h-[84px]">
+						<img src={game.bggThumbnail} class="object-cover w-full h-full" alt="" srcset="" />
+					</div>
+				{/if}
+				<div class="card-body h-auto w-full flex-grow">
 					<div>
 						<h2 class="card-title line-clamp-1">{game.name}</h2>
 						<p>{game.description}</p>

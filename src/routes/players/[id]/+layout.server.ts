@@ -23,7 +23,10 @@ export const load = (async ({ params }) => {
 		throw error(404, 'Player not found');
 	}
 
+  const wins = await prisma.play.getPlayerWins(Number(params.id))
+
 	return {
-		player
+		player,
+    wins
 	};
 }) satisfies LayoutServerLoad;
