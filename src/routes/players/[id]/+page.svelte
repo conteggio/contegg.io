@@ -2,7 +2,7 @@
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
-	const { player, wins } = data;
+	const { player, wins, winRates } = data;
 </script>
 
 <div class="w-full flex flex-row justify-between">
@@ -40,19 +40,16 @@
 	<div class="stat rounded-2xl bg-base-200 text-base-content">
 		<div class="stat-title font-">Wins</div>
 		<div class="stat-value">{wins}</div>
-		<div class="stat-desc">All Time</div>
 	</div>
 
 	<div class="stat rounded-2xl bg-base-200 text-base-content">
 		<div class="stat-title">Plays</div>
-		<div class="stat-value">44</div>
-		<div class="stat-desc">All Time</div>
+		<div class="stat-value">{player._count.plays}</div>
 	</div>
 
-	<div class="stat rounded-2xl bg-indigo-100 text-indigo-900">
+	<div class="stat rounded-2xl bg-base-200 text-base-content">
 		<div class="stat-title">Win Rate</div>
-		<div class="stat-value">1,200</div>
-		<div class="stat-desc">All Time</div>
+		<div class="stat-value">{((wins / player._count.plays) * 100).toFixed(0)}%</div>
 	</div>
 </div>
 <h2>Plays</h2>

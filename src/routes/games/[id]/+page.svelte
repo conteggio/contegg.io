@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	const { game } = data;
+	const { game, scores } = data;
 </script>
 
 <div class="w-full flex flex-row justify-between">
@@ -37,22 +37,19 @@
 	</div>
 </div>
 <div class="w-full flex flex-col md:flex-row gap-6 justify-between">
-	<div class="stat rounded-2xl bg-green-100 text-green-900">
-		<div class="stat-title font-">Wins</div>
-		<div class="stat-value">31</div>
-		<div class="stat-desc">All Time</div>
+	<div class="stat rounded-2xl bg-base-200 text-base-content">
+		<div class="stat-title font-">Plays</div>
+		<div class="stat-value">{game._count.plays}</div>
 	</div>
 
-	<div class="stat rounded-2xl bg-red-100 text-red-900">
-		<div class="stat-title">Losses</div>
-		<div class="stat-value">44</div>
-		<div class="stat-desc">All Time</div>
+	<div class="stat rounded-2xl bg-base-200 text-base-content">
+		<div class="stat-title">Avg. Score</div>
+		<div class="stat-value">{scores.average_score?.toFixed(1) || 'N/A'}</div>
 	</div>
 
-	<div class="stat rounded-2xl bg-indigo-100 text-indigo-900">
-		<div class="stat-title">Win Rate</div>
-		<div class="stat-value">1,200</div>
-		<div class="stat-desc">All Time</div>
+	<div class="stat rounded-2xl bg-base-200 text-base-content">
+		<div class="stat-title">High Score</div>
+		<div class="stat-value">{scores.high_score || 'N/A'}</div>
 	</div>
 </div>
 <h2>Plays</h2>

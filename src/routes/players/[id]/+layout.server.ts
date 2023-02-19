@@ -15,7 +15,12 @@ export const load = (async ({ params }) => {
 						}
 					}
 				}
-			}
+			},
+      _count: {
+        select: {
+          plays: true
+        }
+      }
 		}
 	});
 
@@ -25,8 +30,11 @@ export const load = (async ({ params }) => {
 
   const wins = await prisma.play.getPlayerWins(Number(params.id))
 
+  const winRates = await prisma.player.getWinRates(Number(params.id))
+
 	return {
 		player,
-    wins
+    wins,
+    winRates
 	};
 }) satisfies LayoutServerLoad;

@@ -138,6 +138,13 @@ export const actions: Actions = {
 			}
 		});
 	},
+  createSession: async ({params}) => {
+		await prisma.session.create({
+			data: {
+				playId: Number(params.id)
+			}
+		});
+  },
 	delete: async ({ request }) => {
 		const data = await request.formData();
 		let id = data.get('id');

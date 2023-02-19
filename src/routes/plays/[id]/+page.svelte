@@ -41,6 +41,12 @@
 >
 
 <h2>Sessions</h2>
+{#each play.sessions as session (session.id)}
+	<p>{session.startedAt}</p>
+{/each}
+<form method="POST" action="?/createSession">
+	<button type="submit" class="btn mt-6" class:btn-outline={players.length}>Add Session</button>
+</form>
 
 <input type="checkbox" id="delete-play-modal" class="modal-toggle" />
 <div class="modal not-prose">
