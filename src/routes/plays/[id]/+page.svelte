@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ChartBar from '$lib/components/chart/ChartBar.svelte';
 	import PlayScores from '$lib/components/PlayScores.svelte';
 	import type { PlayerWithPlace } from '$lib/server/prisma';
 	import type { LayoutData, PageData } from './$types';
@@ -31,8 +32,28 @@
 </div>
 
 <h2 class="!mt-0">Scores</h2>
+
 {#if players.length}
-	<PlayScores {players} />
+	<ChartBar
+		data={{
+			labels: players.map(({ name }) => name),
+			datasets: [
+				{
+					label: 'Score',
+					data: players.map(({ score }) => score),
+					backgroundColor: '#1FB2A5'
+				}
+			]
+		}}
+		options={{
+			indexAxis: 'y',
+			scales: {
+				y: {
+					beginAtZero: true
+				}
+			}
+		}}
+	/>
 {:else}
 	<p>Add one or more players to start keeping score.</p>
 {/if}

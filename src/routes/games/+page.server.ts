@@ -14,18 +14,17 @@ export const actions: Actions = {
 			return fail(400, { name, missing: true });
 		}
 
-    const bggRes = await fetch(`https://boardgamegeek.com/xmlapi2/thing?parameters&id=${bggId}`)
-    const result = await bggRes.text();
+		const bggRes = await fetch(`https://boardgamegeek.com/xmlapi2/thing?parameters&id=${bggId}`);
+		const result = await bggRes.text();
 		const bggData = parser.parse(result);
-    console.log(bggData)
-    const bggThumbnail: string | undefined = bggData.items.item.thumbnail;
+		const bggThumbnail: string | undefined = bggData.items.item.thumbnail;
 
 		const newGame = await prisma.game.create({
 			data: {
 				name,
 				description,
 				bggId,
-        bggThumbnail
+				bggThumbnail
 			}
 		});
 

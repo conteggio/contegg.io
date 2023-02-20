@@ -58,7 +58,7 @@ const prisma = prismaClient.$extends({
 		},
 		player: {
 			async getWinRates(playerId: number) {
-				const res = await prisma.$queryRaw`
+				return await prisma.$queryRaw`
           SELECT
             g.name AS game_name,
             COUNT(*) AS total_games,
@@ -89,8 +89,6 @@ const prisma = prismaClient.$extends({
           GROUP BY
             g.name
         `;
-				console.log(res);
-				return res;
 			}
 		}
 	}

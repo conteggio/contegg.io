@@ -49,7 +49,9 @@
 
 	<div class="stat rounded-2xl bg-base-200 text-base-content">
 		<div class="stat-title">Win Rate</div>
-		<div class="stat-value">{((wins / player._count.plays) * 100).toFixed(0)}%</div>
+		<div class="stat-value">
+			{player._count.plays ? ((wins / player._count.plays) * 100).toFixed(0) + '%' : 'N/A'}
+		</div>
 	</div>
 </div>
 <h2>Plays</h2>

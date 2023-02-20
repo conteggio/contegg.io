@@ -8,7 +8,6 @@ export const load = (async () => {
 			}
 		}
 	});
-	console.log(playHistory);
 	return {
 		playHistory
 	};

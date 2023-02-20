@@ -35,8 +35,6 @@ export const load = (async ({ params }) => {
 		throw error(404, 'Game not found');
 	}
 
-	console.log(scores);
-
 	return {
 		game,
 		scores
