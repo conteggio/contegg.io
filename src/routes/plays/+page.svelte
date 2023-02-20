@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CardPlay from '$lib/components/card/CardPlay.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -24,20 +25,6 @@
 </form>
 <div class="not-prose py-6 flex flex-col space-y-6">
 	{#each plays as play (play.id)}
-		<a href={`/plays/${play.id}`}>
-			<div
-				class="card card-compact bg-base-200 hover:bg-base-100 transition-color duration-200 ease-in-out"
-			>
-				<div class="card-body">
-					<div>
-						<h2 class="card-title line-clamp-1">{play.game.name}</h2>
-						<p>
-							<span class="badge badge-success">Finished</span>
-							{play.createdAt.toLocaleDateString()}
-						</p>
-					</div>
-				</div>
-			</div>
-		</a>
+		<CardPlay {play} />
 	{/each}
 </div>
