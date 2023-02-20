@@ -14,7 +14,7 @@
 	<input id="drawer" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content flex flex-col items-center justify-start">
 		<!-- Page content here -->
-		<div class="container mx-auto py-12 prose md:prose-lg">
+		<div class="container mx-auto px-6 py-12 prose md:prose-lg">
 			<Breadcrumb path={$page.url.pathname} />
 			<slot />
 		</div>

@@ -44,12 +44,6 @@ export const actions: Actions = {
 			(playerId: number) => !selectedPlayers.includes(playerId)
 		);
 
-		console.log({
-			existingPlayers,
-			selectedPlayers,
-			playersToDisconnect
-		});
-
 		// Attempt Prisma transaction only if there is a change to players
 		if (selectedPlayers !== existingPlayers) {
 			try {
@@ -135,6 +129,13 @@ export const actions: Actions = {
 			},
 			data: {
 				score: Number(score)
+			}
+		});
+	},
+	createSession: async ({ params }) => {
+		await prisma.session.create({
+			data: {
+				playId: Number(params.id)
 			}
 		});
 	},

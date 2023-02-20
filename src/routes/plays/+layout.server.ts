@@ -4,7 +4,7 @@ export const load = (async () => {
 	return {
 		plays: await prisma.play.findMany({
 			include: {
-				game: true
+				game: true,
 			},
 			orderBy: {
 				createdAt: 'desc'

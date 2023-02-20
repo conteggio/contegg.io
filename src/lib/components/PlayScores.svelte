@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PlayerWithPlace } from '$lib/server/prisma';
+	import { formatOrdinals } from '$lib/universal/formatOrdinals';
 	import IconTrophy from './icon/IconTrophy.svelte';
 
 	export let players: PlayerWithPlace[];
@@ -19,7 +20,7 @@
 				<tr>
 					<td>
 						<div class="flex items-center gap-4">
-							<span>{player.place}</span>
+							<span>{formatOrdinals(Number(player.place))}</span>
 							{#if player.place == 1}
 								<IconTrophy class="w-4 h-4 text-[#D9A441]" />
 							{:else if player.place == 2}

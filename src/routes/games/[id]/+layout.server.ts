@@ -7,15 +7,36 @@ export const load = (async ({ params }) => {
 			id: Number(params.id)
 		},
 		include: {
-			plays: true
+			plays: true,
+			_count: {
+				select: {
+					plays: true
+				}
+			}
 		}
 	});
+
+	type Score = {
+		average_score: number;
+		high_score: number;
+	};
+
+	const scoresArr: Score[] = await prisma.$queryRaw`
+    SELECT AVG(score) as average_score, MAX(score) as high_score
+    FROM PlayerPlay
+    WHERE playId IN (
+      SELECT id FROM Play WHERE gameId = ${Number(params.id)}
+    );
+
+  `;
+	const scores = scoresArr[0];
 
 	if (!game) {
 		throw error(404, 'Game not found');
 	}
 
 	return {
-		game
+		game,
+		scores
 	};
 }) satisfies LayoutServerLoad;
