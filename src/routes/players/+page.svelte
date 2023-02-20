@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import CardPlayer from '$lib/components/card/CardPlayer.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -35,16 +36,6 @@
 </form>
 <div class="not-prose py-6 flex flex-col space-y-6">
 	{#each players as player (player.id)}
-		<a href={`/players/${player.id}`}>
-			<div
-				class="card card-compact bg-base-200 hover:bg-base-100 transition-color duration-200 ease-in-out"
-			>
-				<div class="card-body">
-					<div>
-						<h2 class="card-title line-clamp-1">{player.name}</h2>
-					</div>
-				</div>
-			</div>
-		</a>
+		<CardPlayer {player} />
 	{/each}
 </div>

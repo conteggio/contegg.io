@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CardPlay from '$lib/components/card/CardPlay.svelte';
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
@@ -56,7 +57,7 @@
 </div>
 <h2>Plays</h2>
 {#each player.plays as play (play.playId)}
-	<p>{play.play.game.name}</p>
+	<CardPlay play={play.play} />
 {/each}
 
 <input type="checkbox" id="delete-player-modal" class="modal-toggle" />

@@ -11,16 +11,20 @@ export const load = (async ({ params }) => {
 				include: {
 					play: {
 						include: {
-							game: true
+							game: {
+								select: {
+									name: true
+								}
+							}
 						}
 					}
 				}
 			},
-      _count: {
-        select: {
-          plays: true
-        }
-      }
+			_count: {
+				select: {
+					plays: true
+				}
+			}
 		}
 	});
 
@@ -28,13 +32,13 @@ export const load = (async ({ params }) => {
 		throw error(404, 'Player not found');
 	}
 
-  const wins = await prisma.play.getPlayerWins(Number(params.id))
+	const wins = await prisma.play.getPlayerWins(Number(params.id));
 
-  const winRates = await prisma.player.getWinRates(Number(params.id))
+	const winRates = await prisma.player.getWinRates(Number(params.id));
 
 	return {
 		player,
-    wins,
-    winRates
+		wins,
+		winRates
 	};
 }) satisfies LayoutServerLoad;
