@@ -56,9 +56,11 @@
 	</div>
 </div>
 <h2>Plays</h2>
-{#each player.plays as play (play.playId)}
-	<CardPlay play={play.play} />
-{/each}
+<div class="flex flex-col gap-6">
+	{#each player.plays as play (play.playId)}
+		<CardPlay play={play.play} />
+	{/each}
+</div>
 
 <input type="checkbox" id="delete-player-modal" class="modal-toggle" />
 <div class="modal not-prose">

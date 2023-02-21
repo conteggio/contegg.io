@@ -26,7 +26,7 @@
 	}
 </script>
 
-<div class="not-prose breadcrumbs mb-16 py-0">
+<div class="breadcrumbs py-0">
 	<ul>
 		{#each crumbs as { label, href }, i}
 			<li data-testid={`${label}-crumb`} class="capitalize">

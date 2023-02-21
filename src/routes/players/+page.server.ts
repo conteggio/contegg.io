@@ -1,6 +1,12 @@
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import prisma from '$lib/server/prisma';
+
+export const load = (async () => {
+	return {
+		players: await prisma.player.findMany()
+	};
+}) satisfies PageServerLoad;
 
 export const actions: Actions = {
 	create: async ({ request }) => {
@@ -16,10 +22,6 @@ export const actions: Actions = {
 				name
 			}
 		});
-
-		if (newPlayer) {
-			throw redirect(303, `/players`);
-		}
 
 		return {
 			newPlayer

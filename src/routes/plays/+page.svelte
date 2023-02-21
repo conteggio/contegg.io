@@ -19,7 +19,7 @@
 					<option value={game.id} class="w-full overflow-hidden">{game.name}</option>
 				{/each}
 			</select>
-			<button class="btn">Play</button>
+			<button class="btn btn-primary">Play</button>
 		</div>
 	</div>
 </form>

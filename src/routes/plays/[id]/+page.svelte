@@ -1,6 +1,5 @@
 <script lang="ts">
 	import ChartBar from '$lib/components/chart/ChartBar.svelte';
-	import PlayScores from '$lib/components/PlayScores.svelte';
 	import type { PlayerWithPlace } from '$lib/server/prisma';
 	import type { LayoutData, PageData } from './$types';
 
@@ -31,42 +30,48 @@
 	</div>
 </div>
 
-<h2 class="!mt-0">Scores</h2>
+<div class="grid grid-cols-12">
+	<section class="col-span-12 xl:col-span-4 bg-base-300 p-6 md:p-12 rounded-3xl">
+		<h2 class="!mt-0">Scores</h2>
 
-{#if players.length}
-	<ChartBar
-		data={{
-			labels: players.map(({ name }) => name),
-			datasets: [
-				{
-					label: 'Score',
-					data: players.map(({ score }) => score),
-					backgroundColor: '#1FB2A5'
-				}
-			]
-		}}
-		options={{
-			indexAxis: 'y',
-			scales: {
-				y: {
-					beginAtZero: true
-				}
-			}
-		}}
-	/>
-{:else}
-	<p>Add one or more players to start keeping score.</p>
-{/if}
-<label for="manage-players-modal" class="btn mt-6" class:btn-outline={players.length}
-	>Manage Players</label
->
+		{#if players.length}
+			<ChartBar
+				data={{
+					labels: players.map(({ name }) => name),
+					datasets: [
+						{
+							label: 'Score',
+							data: players.map(({ score }) => score),
+							backgroundColor: '#f99155'
+						}
+					]
+				}}
+				options={{
+					indexAxis: 'y',
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}}
+			/>
+		{:else}
+			<p>Add one or more players to start keeping score.</p>
+		{/if}
+		<label for="manage-players-modal" class="btn mt-6" class:btn-outline={players.length}
+			>Manage Players</label
+		>
+	</section>
+</div>
 
 <h2>Sessions</h2>
 {#each play.sessions as session (session.id)}
 	<p>{session.startedAt}</p>
 {/each}
 <form method="POST" action="?/createSession">
-	<button type="submit" class="btn mt-6" class:btn-outline={players.length}>Add Session</button>
+	<button type="submit" class="btn btn-error mt-6" class:btn-outline={players.length}
+		>Add Session</button
+	>
 </form>
 
 <input type="checkbox" id="delete-play-modal" class="modal-toggle" />
