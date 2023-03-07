@@ -12,7 +12,7 @@
 				class="input bg-base-200 focus:outline-none focus:bg-base-100"
 				{value}
 			/>
-			<button class="btn btn-square">
+			<button class="btn btn-primary btn-square">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"

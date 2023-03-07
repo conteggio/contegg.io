@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+
 	// Components
 	import List from '$lib/components/list/List.svelte';
 
@@ -9,7 +11,7 @@
 </script>
 
 <h1>Plays</h1>
-<form method="POST" action="?/create">
+<form method="POST" action="?/create" use:enhance>
 	<div class="form-control w-full max-w-xs">
 		<div class="input-group">
 			<select
@@ -21,7 +23,7 @@
 					<option value={game.id} class="w-full overflow-hidden">{game.name}</option>
 				{/each}
 			</select>
-			<button class="btn">Play</button>
+			<button class="btn btn-primary">Play</button>
 		</div>
 	</div>
 </form>

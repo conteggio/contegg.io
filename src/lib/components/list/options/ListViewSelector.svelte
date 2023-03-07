@@ -25,13 +25,13 @@
 
 <div class="flex gap-2">
 	<button
-		class:btn-ghost={view === 'table'}
-		class="btn btn-sm btn-square"
+		class:bg-base-100={view === 'cards'}
+		class="btn btn-ghost btn-sm btn-square"
 		on:click={() => setView('cards')}><IconCards class="w-5 h-5" /></button
 	>
 	<button
-		class:btn-ghost={view === 'cards'}
-		class="btn btn-sm btn-square"
+		class:bg-base-100={view === 'table'}
+		class="btn btn-ghost btn-sm btn-square"
 		on:click={() => setView('table')}><IconTable class="w-5 h-5" /></button
 	>
 </div>

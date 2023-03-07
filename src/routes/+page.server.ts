@@ -9,6 +9,7 @@ export const load = (async () => {
 		}
 	});
 	return {
+		title: 'contegg.io',
 		playHistory
 	};
 }) satisfies PageServerLoad;

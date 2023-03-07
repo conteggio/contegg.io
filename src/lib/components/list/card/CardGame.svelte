@@ -1,4 +1,6 @@
 <script>
+	import Favorite from '$lib/components/Favorite.svelte';
+
 	// Components
 	import Card from './Card.svelte';
 
@@ -14,4 +16,5 @@
 	<div slot="body">
 		<h2 class="card-title line-clamp-1">{game.name}</h2>
 	</div>
+	<Favorite class="absolute -top-2 -right-2" slot="corner-action" />
 </Card>

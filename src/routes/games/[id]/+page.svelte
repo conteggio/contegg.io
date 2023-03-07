@@ -1,10 +1,10 @@
 <script lang="ts">
-	import CardPlay from '$lib/components/list/card/CardPlay.svelte';
 	import List from '$lib/components/list/List.svelte';
+	import Portal from 'svelte-portal/src/Portal.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	const { game, scores } = data;
+	$: ({ game, scores } = data);
 </script>
 
 <div class="w-full flex flex-row justify-between">
@@ -57,20 +57,22 @@
 <h2>Plays</h2>
 <List plays={game.plays} />
 
-<input type="checkbox" id="delete-game-modal" class="modal-toggle" />
-<div class="modal not-prose">
-	<div class="modal-box">
-		<h3 class="font-bold text-lg">Are you sure you want to delete {game.name}?</h3>
-		<p class="py-4">
-			By deleting this game, you will lose all play data. If you would like to keep your play data,
-			you may archive this game.
-		</p>
-		<div class="modal-action">
-			<label for="delete-game-modal" class="btn btn-outline">Nevermind</label>
-			<form method="POST" action="/games?/delete">
-				<input name="id" type="hidden" value={game.id} />
-				<button class="btn btn-error">Delete Game</button>
-			</form>
+<Portal>
+	<input type="checkbox" id="delete-game-modal" class="modal-toggle" />
+	<div class="modal not-prose">
+		<div class="modal-box">
+			<h3 class="font-bold text-lg">Are you sure you want to delete {game.name}?</h3>
+			<p class="py-4">
+				By deleting this game, you will lose all play data. If you would like to keep your play
+				data, you may archive this game.
+			</p>
+			<div class="modal-action">
+				<label for="delete-game-modal" class="btn btn-outline">Nevermind</label>
+				<form method="POST" action="/games?/delete">
+					<input name="id" type="hidden" value={game.id} />
+					<button class="btn btn-error">Delete Game</button>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
+</Portal>

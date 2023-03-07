@@ -31,7 +31,7 @@
 					<div class="avatar-group -space-x-6">
 						{#each play.players as playerPlay, i (playerPlay.playerId)}
 							{#if i < 4}
-								<Avatar {playerPlay} />
+								<Avatar player={playerPlay.player} clickable />
 							{:else if i === 4}
 								<div class="avatar placeholder">
 									<div class="w-12 bg-neutral-focus text-neutral-content">
