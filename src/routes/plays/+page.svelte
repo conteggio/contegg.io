@@ -1,9 +1,11 @@
 <script lang="ts">
-	import CardPlay from '$lib/components/card/CardPlay.svelte';
+	// Components
+	import List from '$lib/components/list/List.svelte';
+
+	// Types
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	const { plays, games } = data;
 </script>
 
 <h1>Plays</h1>
@@ -15,7 +17,7 @@
 				class="select bg-base-200 focus:outline-none focus:bg-base-100 max-w-xs"
 			>
 				<option hidden selected>Pick a game to play...</option>
-				{#each games as game (game.id)}
+				{#each data.games as game (game.id)}
 					<option value={game.id} class="w-full overflow-hidden">{game.name}</option>
 				{/each}
 			</select>
@@ -23,8 +25,4 @@
 		</div>
 	</div>
 </form>
-<div class="not-prose py-6 flex flex-col space-y-6">
-	{#each plays as play (play.id)}
-		<CardPlay {play} />
-	{/each}
-</div>
+<List plays={data.plays} />

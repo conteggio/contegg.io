@@ -1,5 +1,6 @@
 <script lang="ts">
-	import CardPlay from '$lib/components/card/CardPlay.svelte';
+	import CardPlay from '$lib/components/list/card/CardPlay.svelte';
+	import List from '$lib/components/list/List.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -54,9 +55,7 @@
 	</div>
 </div>
 <h2>Plays</h2>
-{#each game.plays as play (play.id)}
-	<CardPlay {play} />
-{/each}
+<List plays={game.plays} />
 
 <input type="checkbox" id="delete-game-modal" class="modal-toggle" />
 <div class="modal not-prose">

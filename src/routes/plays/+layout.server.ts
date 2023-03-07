@@ -5,6 +5,16 @@ export const load = (async () => {
 		plays: await prisma.play.findMany({
 			include: {
 				game: true,
+				players: {
+					include: {
+						player: true
+					}
+				},
+				_count: {
+					select: {
+						players: true
+					}
+				}
 			},
 			orderBy: {
 				createdAt: 'desc'

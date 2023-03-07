@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from '@testing-library/svelte';
+import { render, screen } from '@testing-library/svelte';
 import Breadcrumb from './Breadcrumb.svelte';
 
 describe('Breadcrumb.svelte', async () => {

@@ -9,7 +9,17 @@ export const load = (async ({ params }) => {
 		include: {
 			plays: {
 				include: {
-					game: true
+					game: true,
+					players: {
+						include: {
+							player: true
+						}
+					},
+          _count: {
+            select: {
+              players: true
+            }
+          }
 				}
 			},
 			_count: {

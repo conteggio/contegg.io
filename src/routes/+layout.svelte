@@ -1,20 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
-	import TheHeader from '$lib/components/TheHeader.svelte';
 	import '@fontsource/sofia-sans';
 	import '../app.css';
-	import type { LayoutData } from './$types';
-
-	export let data: LayoutData;
-	const { paths } = data;
 </script>
 
 <div class="drawer drawer-mobile">
 	<input id="drawer" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content flex flex-col items-center justify-start">
 		<!-- Page content here -->
-		<div class="container mx-auto px-6 py-12 prose md:prose-lg">
+		<div class="container max-w-none mx-auto px-6 lg:px-12 py-12 prose md:prose-lg z-0">
 			<Breadcrumb path={$page.url.pathname} />
 			<slot />
 		</div>
