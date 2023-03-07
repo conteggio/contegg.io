@@ -1,11 +1,14 @@
-<script lang="ts">
-	import type { Game } from '@prisma/client';
+<script>
+	// Components
 	import Card from './Card.svelte';
-	export let game: Game;
+
+	// Props
+	/** @type {import('@prisma/client').Game} */
+	export let game;
 </script>
 
 <Card href={`/games/${game.id}`}>
-	<div class="aspect-[6/4] h-[84px]" slot="image">
+	<div class="aspect-[6/4] overflow-hidden rounded-t-[inherit]" slot="image">
 		<img src={game.bggThumbnail} class="object-cover w-full h-full" alt="" srcset="" />
 	</div>
 	<div slot="body">

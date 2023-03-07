@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	.table th:first-child {
+		@apply static;
+	}
+
+	.sortable th {
+		@apply select-none hover:cursor-pointer after:text-[1.2em] after:content-["\025BE"] after:ml-1 after:text-transparent hover:after:text-inherit after:transition-colors after:duration-300 after:ease-in-out;
+	}
+
+	.sortable th.dir-u {
+		@apply after:text-secondary after:content-["\025B4"];
+	}
+
+	.sortable th.dir-d {
+		@apply after:text-secondary after:content-["\025BE"];
+	}
+}

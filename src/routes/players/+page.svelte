@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import CardPlayer from '$lib/components/card/CardPlayer.svelte';
+	import List from '$lib/components/list/List.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	const { players } = data;
 </script>
 
 <h1>Players</h1>
@@ -34,8 +32,4 @@
 		</div>
 	</div>
 </form>
-<div class="not-prose py-6 flex flex-col space-y-6">
-	{#each players as player (player.id)}
-		<CardPlayer {player} />
-	{/each}
-</div>
+<List players={data.players} />

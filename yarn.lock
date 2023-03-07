@@ -2794,6 +2794,11 @@ sorcery@^0.11.0:
     minimist "^1.2.0"
     sander "^0.5.0"
 
+sortable-tablesort@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/sortable-tablesort/-/sortable-tablesort-2.0.0.tgz#7878ea6f33207cf3679eb7dec08a3c6b42375223"
+  integrity sha512-ZbY9Om07DoCePYpEg5NyKBWjY0Z4EcRjEpNHMPYlNvVf1EEkMcZMez2+OjhZ4dqw/3nJPthv6L0+bk+GTmFkAw==
+
 source-map-js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"

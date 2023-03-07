@@ -7,22 +7,32 @@ export const load = (async ({ params }) => {
 			id: Number(params.id)
 		},
 		include: {
-			plays: {
+			_count: {
+				select: {
+					plays: true
+				}
+			}
+		}
+	});
+
+	const plays = await prisma.play.findMany({
+		where: {
+			players: {
+				some: {
+					playerId: Number(params.id)
+				}
+			}
+		},
+		include: {
+			game: true,
+			players: {
 				include: {
-					play: {
-						include: {
-							game: {
-								select: {
-									name: true
-								}
-							}
-						}
-					}
+					player: true
 				}
 			},
 			_count: {
 				select: {
-					plays: true
+					players: true
 				}
 			}
 		}
@@ -38,6 +48,7 @@ export const load = (async ({ params }) => {
 
 	return {
 		player,
+		plays,
 		wins,
 		winRates
 	};
