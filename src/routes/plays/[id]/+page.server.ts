@@ -3,7 +3,26 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
+	const play = await prisma.play.findUnique({
+		where: {
+			id: Number(params.id)
+		},
+		include: {
+			game: true,
+			players: true,
+			sessions: true
+		}
+	});
+
+	if (!play) {
+		throw error(404, 'Play not found');
+	}
+
 	return {
+		title: `${play.createdAt.toLocaleDateString()} - ${
+			play.game.name.length > 40 ? play.game.name.substring(0, 40) + '…' : play.game.name
+		} | contegg.io`,
+		play,
 		allPlayers: await prisma.player.findMany(),
 		players: await prisma.play.findPlayersWithScores(Number(params.id))
 	};

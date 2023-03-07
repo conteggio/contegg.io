@@ -1,14 +1,16 @@
 <script lang="ts">
+	import Portal from 'svelte-portal/src/Portal.svelte';
 	import List from '$lib/components/list/List.svelte';
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
+	$: ({ player, plays, wins } = data);
 </script>
 
 <div class="w-full flex flex-row justify-between">
-	<h1>{data.player.name}</h1>
+	<h1>{player.name}</h1>
 	<div class="flex space-x-2">
-		<a href={`/players/${data.player.id}/edit`} class="btn btn-ghost btn-square">
+		<a href={`/players/${player.id}/edit`} class="btn btn-ghost btn-square">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
@@ -39,37 +41,37 @@
 <div class="w-full flex flex-col md:flex-row gap-6 justify-between">
 	<div class="stat rounded-2xl bg-base-200 text-base-content">
 		<div class="stat-title font-">Wins</div>
-		<div class="stat-value">{data.wins}</div>
+		<div class="stat-value">{wins}</div>
 	</div>
 
 	<div class="stat rounded-2xl bg-base-200 text-base-content">
 		<div class="stat-title">Plays</div>
-		<div class="stat-value">{data.player._count.plays}</div>
+		<div class="stat-value">{player._count.plays}</div>
 	</div>
 
 	<div class="stat rounded-2xl bg-base-200 text-base-content">
 		<div class="stat-title">Win Rate</div>
 		<div class="stat-value">
-			{data.player._count.plays
-				? ((data.wins / data.player._count.plays) * 100).toFixed(0) + '%'
-				: 'N/A'}
+			{player._count.plays ? ((wins / player._count.plays) * 100).toFixed(0) + '%' : 'N/A'}
 		</div>
 	</div>
 </div>
 <h2>Plays</h2>
-<List plays={data.plays} />
+<List {plays} />
 
-<input type="checkbox" id="delete-player-modal" class="modal-toggle" />
-<div class="modal not-prose">
-	<div class="modal-box">
-		<h3 class="font-bold text-lg">Are you sure you want to delete {data.player.name}?</h3>
-		<p class="py-4">By deleting this player, you will lose all of their play data.</p>
-		<div class="modal-action">
-			<label for="delete-player-modal" class="btn btn-outline">Nevermind</label>
-			<form method="POST" action="/players?/delete">
-				<input name="id" type="hidden" value={data.player.id} />
-				<button class="btn btn-error">Delete Player</button>
-			</form>
+<Portal>
+	<input type="checkbox" id="delete-player-modal" class="modal-toggle" />
+	<div class="modal not-prose">
+		<div class="modal-box">
+			<h3 class="font-bold text-lg">Are you sure you want to delete {player.name}?</h3>
+			<p class="py-4">By deleting this player, you will lose all of their play data.</p>
+			<div class="modal-action">
+				<label for="delete-player-modal" class="btn btn-outline">Nevermind</label>
+				<form method="POST" action="/players?/delete">
+					<input name="id" type="hidden" value={player.id} />
+					<button class="btn btn-error">Delete Player</button>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
+</Portal>

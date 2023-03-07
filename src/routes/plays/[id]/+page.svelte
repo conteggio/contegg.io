@@ -1,14 +1,14 @@
 <script lang="ts">
 	import ChartBar from '$lib/components/chart/ChartBar.svelte';
-	import PlayScores from '$lib/components/PlayScores.svelte';
 	import type { PlayerWithPlace } from '$lib/server/prisma';
+	import Portal from 'svelte-portal/src/Portal.svelte';
 	import type { LayoutData, PageData } from './$types';
 
 	export let data: PageData | LayoutData;
-	const { play, players, allPlayers } = data;
+	$: ({ play, players, allPlayers } = data);
 
-	const existingPlayers = players.map((player: PlayerWithPlace) => player.playerId);
-	let selectedPlayers: number[] = existingPlayers;
+	$: existingPlayers = players.map((player: PlayerWithPlace) => player.playerId);
+	$: selectedPlayers = existingPlayers;
 </script>
 
 <div class="w-full flex flex-row justify-between gap-6">
@@ -41,7 +41,7 @@
 				{
 					label: 'Score',
 					data: players.map(({ score }) => score),
-					backgroundColor: '#1FB2A5'
+					backgroundColor: '#f99155'
 				}
 			]
 		}}
@@ -69,56 +69,60 @@
 	<button type="submit" class="btn mt-6" class:btn-outline={players.length}>Add Session</button>
 </form>
 
-<input type="checkbox" id="delete-play-modal" class="modal-toggle" />
-<div class="modal not-prose">
-	<div class="modal-box">
-		<h3 class="font-bold text-lg">Are you sure you want to delete this play?</h3>
-		<p class="py-4">By deleting this play, you will lose all play data and sessions.</p>
-		<div class="modal-action">
-			<label for="delete-play-modal" class="btn btn-outline">Nevermind</label>
-			<form method="POST" action="/plays?/delete">
-				<input name="id" type="hidden" value={play.id} />
-				<button class="btn btn-error">Delete Play</button>
+<Portal>
+	<!-- Delete Play Modal -->
+	<input type="checkbox" id="delete-play-modal" class="modal-toggle" />
+	<div class="modal not-prose">
+		<div class="modal-box">
+			<h3 class="font-bold text-lg">Are you sure you want to delete this play?</h3>
+			<p class="py-4">By deleting this play, you will lose all play data and sessions.</p>
+			<div class="modal-action">
+				<label for="delete-play-modal" class="btn btn-outline">Nevermind</label>
+				<form method="POST" action="/plays?/delete">
+					<input name="id" type="hidden" value={play.id} />
+					<button class="btn btn-error">Delete Play</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Edit Players Modal -->
+	<input type="checkbox" id="manage-players-modal" class="modal-toggle" />
+	<div class="modal not-prose">
+		<div class="modal-box">
+			<h3 class="font-bold text-lg mb-6">Select Players</h3>
+			<form method="POST" action="?/updatePlayers">
+				<div class="flex flex-col gap-2 mt-4 overflow-y-auto max-h-[50vh]">
+					{#each allPlayers as { name, id } (id)}
+						<label for={id} class="hover:cursor-pointer active:scale-[0.99]">
+							<div
+								class="card card-compact bg-base-200 hover:bg-base-300 transition-color duration-200 ease-in-out"
+							>
+								<div class="card-body !py-3">
+									<div class="flex justify-between items-center">
+										<h2 class="card-title line-clamp-1">{name}</h2>
+										<input
+											type="checkbox"
+											bind:group={selectedPlayers}
+											{id}
+											value={id}
+											checked={players.some((player) => player.playerId === id)}
+											class="checkbox checked:checkbox-success"
+										/>
+									</div>
+								</div>
+							</div>
+						</label>
+					{/each}
+				</div>
+				<input type="hidden" name="existingPlayers" value={existingPlayers} />
+				<input type="hidden" name="selectedPlayers" value={selectedPlayers} />
+				<input type="hidden" name="playId" value={play.id} />
+				<div class="modal-action">
+					<label for="manage-players-modal" class="btn btn-outline">Nevermind</label>
+					<button type="submit" class="btn btn-success">Save Changes</button>
+				</div>
 			</form>
 		</div>
 	</div>
-</div>
-
-<input type="checkbox" id="manage-players-modal" class="modal-toggle" />
-<div class="modal not-prose">
-	<div class="modal-box">
-		<h3 class="font-bold text-lg mb-6">Select Players</h3>
-		<form method="POST" action="?/updatePlayers">
-			<div class="flex flex-col gap-2 mt-4 overflow-y-auto max-h-[50vh]">
-				{#each allPlayers as { name, id } (id)}
-					<label for={id} class="hover:cursor-pointer active:scale-[0.99]">
-						<div
-							class="card card-compact bg-base-200 hover:bg-base-300 transition-color duration-200 ease-in-out"
-						>
-							<div class="card-body !py-3">
-								<div class="flex justify-between items-center">
-									<h2 class="card-title line-clamp-1">{name}</h2>
-									<input
-										type="checkbox"
-										bind:group={selectedPlayers}
-										{id}
-										value={id}
-										checked={players.some((player) => player.playerId === id)}
-										class="checkbox checked:checkbox-success"
-									/>
-								</div>
-							</div>
-						</div>
-					</label>
-				{/each}
-			</div>
-			<input type="hidden" name="existingPlayers" value={existingPlayers} />
-			<input type="hidden" name="selectedPlayers" value={selectedPlayers} />
-			<input type="hidden" name="playId" value={play.id} />
-			<div class="modal-action">
-				<label for="manage-players-modal" class="btn btn-outline">Nevermind</label>
-				<button type="submit" class="btn btn-success">Save Changes</button>
-			</div>
-		</form>
-	</div>
-</div>
+</Portal>

@@ -15,11 +15,11 @@ export const load = (async ({ params }) => {
 							player: true
 						}
 					},
-          _count: {
-            select: {
-              players: true
-            }
-          }
+					_count: {
+						select: {
+							players: true
+						}
+					}
 				}
 			},
 			_count: {
@@ -50,6 +50,7 @@ export const load = (async ({ params }) => {
 	}
 
 	return {
+		title: `${game.name.length > 40 ? game.name.substring(0, 40) + '…' : game.name} | contegg.io`,
 		game,
 		scores
 	};

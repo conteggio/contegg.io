@@ -1,6 +1,12 @@
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import prisma from '$lib/server/prisma';
+
+export const load = (async () => {
+	return {
+		title: 'Plays | contegg.io'
+	};
+}) satisfies PageServerLoad;
 
 export const actions: Actions = {
 	create: async ({ request }) => {

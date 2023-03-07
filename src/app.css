@@ -4,7 +4,7 @@
 
 @layer base {
 	.table th:first-child {
-		@apply static;
+		@apply !static;
 	}
 
 	.sortable th {
@@ -12,10 +12,10 @@
 	}
 
 	.sortable th.dir-u {
-		@apply after:text-secondary after:content-["\025B4"];
+		@apply after:text-primary after:content-["\025B4"];
 	}
 
 	.sortable th.dir-d {
-		@apply after:text-secondary after:content-["\025BE"];
+		@apply after:text-primary after:content-["\025BE"];
 	}
 }
