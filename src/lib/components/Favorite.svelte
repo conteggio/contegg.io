@@ -1,11 +1,14 @@
 <script>
 	let className = '';
 	export { className as class };
+
+	/** @type {Boolean}*/
+	let checked = false;
 </script>
 
 <div class={className}>
 	<label class="swap swap-rotate">
-		<input type="checkbox" />
+		<input type="checkbox" bind:checked />
 		<div class="swap-on text-amber-400">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +24,7 @@
 			</svg>
 		</div>
 
-		<div class="swap-off relative">
+		<div class="swap-off relative opacity-0 group-hover:opacity-100">
 			<div class="text-base-200 absolute top-0 left-0">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
