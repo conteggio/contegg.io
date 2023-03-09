@@ -25,3 +25,10 @@ export type PlayForTableView = Play &
 export type PlayerForTableView = Player & PlayCount;
 
 export type ListItem = GameForTableView | PlayerForTableView;
+
+export type RightDrawerContent =
+	| 'edit-player'
+	| 'edit-game'
+	| 'edit-play'
+	| 'edit-player-play'
+	| null;
