@@ -1,35 +1,29 @@
-<script lang="ts">
+<script>
+	import { enhance } from '$app/forms';
+	import ButtonDelete from '$lib/components/button/ButtonDelete.svelte';
+	import ButtonEdit from '$lib/components/button/ButtonEdit.svelte';
 	import ChartBar from '$lib/components/chart/ChartBar.svelte';
-	import type { PlayerWithPlace } from '$lib/server/prisma';
+	import Heading from '$lib/components/Heading.svelte';
+	import PortalToRightDrawer from '$lib/components/PortalToRightDrawer.svelte';
 	import Portal from 'svelte-portal/src/Portal.svelte';
-	import type { LayoutData, PageData } from './$types';
+	import { closeRightDrawer, rightDrawerContent } from '../../../stores';
 
-	export let data: PageData | LayoutData;
+	/** @type {import('./$types').PageData} */
+	export let data;
 	$: ({ play, players, allPlayers } = data);
 
-	$: existingPlayers = players.map((player: PlayerWithPlace) => player.playerId);
+	$: existingPlayers = players.map((player) => player.playerId);
 	$: selectedPlayers = existingPlayers;
 </script>
 
-<div class="w-full flex flex-row justify-between gap-6">
-	<h1 class="line-clamp-1">{play.game.name}</h1>
-	<div class="flex space-x-2">
-		<label for="delete-play-modal" class="btn btn-ghost btn-square">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				fill="currentColor"
-				class="w-6 h-6"
-			>
-				<path
-					fill-rule="evenodd"
-					d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
-					clip-rule="evenodd"
-				/>
-			</svg>
-		</label>
-	</div>
-</div>
+<Heading
+	heading={play.game.name}
+	headingLevel="h1"
+	additionalText={`on ${play.createdAt.toLocaleDateString()}`}
+>
+	<ButtonEdit content="edit-play" />
+	<ButtonDelete modalID="delete-play-modal" />
+</Heading>
 
 <h2 class="!mt-0">Scores</h2>
 
@@ -68,6 +62,40 @@
 <form method="POST" action="?/createSession">
 	<button type="submit" class="btn mt-6" class:btn-outline={players.length}>Add Session</button>
 </form>
+
+{#if $rightDrawerContent === 'edit-play'}
+	<PortalToRightDrawer>
+		<h2 class="font-bold text-2xl">Edit Play</h2>
+		<form method="POST" action="?/update" use:enhance class="mt-6 flex flex-col gap-6 items-start">
+			<input type="hidden" name="id" value={play.id} />
+
+			<div class="form-control w-full">
+				<label for="name" class="label">
+					<span class="label-text">Date</span>
+				</label>
+				<input type="date" name="playedAt" value={play.playedAt || play.createdAt} class="input" />
+			</div>
+
+			<div class="form-control w-full">
+				<label for="name" class="label">
+					<span class="label-text">Location</span>
+				</label>
+				<input type="text" name="location" class="input" />
+			</div>
+
+			<div class="form-control w-full">
+				<label for="name" class="label">
+					<span class="label-text">Duration</span>
+				</label>
+				<input type="text" name="location" class="input" />
+			</div>
+
+			<button type="submit" on:click={() => closeRightDrawer()} class="btn btn-primary mt-6"
+				>Save</button
+			>
+		</form>
+	</PortalToRightDrawer>
+{/if}
 
 <Portal>
 	<!-- Delete Play Modal -->

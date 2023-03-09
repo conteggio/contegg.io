@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+	body {
+		@apply selection:!bg-primary selection:!text-neutral;
+	}
+
 	.table th:first-child {
 		@apply !static;
 	}

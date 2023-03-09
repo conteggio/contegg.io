@@ -1,12 +1,15 @@
-<script lang="ts">
+<script>
 	import GameSearch from '$lib/components/GameSearch.svelte';
-	import type { PageData } from './$types';
 
-	export let data: PageData;
-	// export let form: ActionData;
+	/** @type {import('./$types').PageData} */
+	export let data;
 	const { games, results, count, q } = data;
 
-	function isInCollection(bggId: string): boolean {
+	/**
+	 * @param {String} bggId
+	 * @returns {Boolean}
+	 */
+	function isInCollection(bggId) {
 		return games.find((game) => game.bggId == bggId) ? true : false;
 	}
 </script>
