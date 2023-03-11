@@ -1,5 +1,5 @@
 import prisma from '$lib/server/prisma';
-import { fail, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
@@ -9,8 +9,7 @@ export const load = (async ({ params }) => {
 		},
 		include: {
 			game: true,
-			players: true,
-			sessions: true
+			players: true
 		}
 	});
 
@@ -148,13 +147,6 @@ export const actions: Actions = {
 			},
 			data: {
 				score: Number(score)
-			}
-		});
-	},
-	createSession: async ({ params }) => {
-		await prisma.session.create({
-			data: {
-				playId: Number(params.id)
 			}
 		});
 	},

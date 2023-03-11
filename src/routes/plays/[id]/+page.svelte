@@ -55,14 +55,6 @@
 	>Manage Players</label
 >
 
-<h2>Sessions</h2>
-{#each play.sessions as session (session.id)}
-	<p>{session.startedAt}</p>
-{/each}
-<form method="POST" action="?/createSession">
-	<button type="submit" class="btn mt-6" class:btn-outline={players.length}>Add Session</button>
-</form>
-
 {#if $rightDrawerContent === 'edit-play'}
 	<PortalToRightDrawer>
 		<h2 class="font-bold text-2xl">Edit Play</h2>
@@ -103,7 +95,7 @@
 	<div class="modal not-prose">
 		<div class="modal-box">
 			<h3 class="font-bold text-lg">Are you sure you want to delete this play?</h3>
-			<p class="py-4">By deleting this play, you will lose all play data and sessions.</p>
+			<p class="py-4">By deleting this play, you will lose all play data.</p>
 			<div class="modal-action">
 				<label for="delete-play-modal" class="btn btn-outline">Nevermind</label>
 				<form method="POST" action="/plays?/delete">
