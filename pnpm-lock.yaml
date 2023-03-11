@@ -26,7 +26,6 @@ specifiers:
   prettier: ^2.8.4
   prettier-plugin-svelte: ^2.8.1
   prisma: ^4.10.1
-  sortable-tablesort: ^2.0.0
   svelte: ^3.54.0
   svelte-chartjs: ^3.1.2
   svelte-check: ^3.0.3
@@ -44,7 +43,6 @@ dependencies:
   chart.js: 4.2.1
   daisyui: 2.50.0_by5iqycgvtroytm54ytclj4zzi
   fast-xml-parser: 4.1.2
-  sortable-tablesort: 2.0.0
   svelte-chartjs: 3.1.2_yiedfwyyqww7desthi75buevdy
   svelte-portal: 2.2.0
 
@@ -3023,10 +3021,6 @@ packages:
       minimist: 1.2.8
       sander: 0.5.1
     dev: true
-
-  /sortable-tablesort/2.0.0:
-    resolution: {integrity: sha512-ZbY9Om07DoCePYpEg5NyKBWjY0Z4EcRjEpNHMPYlNvVf1EEkMcZMez2+OjhZ4dqw/3nJPthv6L0+bk+GTmFkAw==}
-    dev: false
 
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
