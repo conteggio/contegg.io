@@ -3,10 +3,12 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-    "preinstall": "npx only-allow pnpm",
+		"preinstall": "npx only-allow pnpm",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"start:prod": "node build",
+		"start:migrate:prod": "prisma migrate deploy && pnpm start:prod",
 		"test": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
