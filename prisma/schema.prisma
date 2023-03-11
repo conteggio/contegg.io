@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Documentation: https://pris.ly/d/prisma-schema
 
 generator client {
   provider        = "prisma-client-js"
@@ -12,15 +11,26 @@ datasource db {
 }
 
 model Game {
-  id           Int            @id @default(autoincrement())
-  name         String
-  description  String?
-  bggId        String?
-  bggThumbnail String?
-  categories   GameCategory[]
-  plays        Play[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id              Int            @id @default(autoincrement())
+  name            String
+  bggId           String?
+  bggName         String?
+  bggDescription  String?
+  bggYear         Int?
+  bggThumbnail    String?
+  bggImage        String?
+  bggMinPlayers   Int?
+  bggMaxPlayers   Int?
+  bggPlayingTime  Int?
+  bggMinAge       Int?
+  ruleNoPoints    Boolean        @default(false)
+  ruleHighestWins Boolean        @default(true)
+  ruleCooperative Boolean        @default(false)
+  ruleUsesTeams   Boolean        @default(false)
+  categories      GameCategory[]
+  plays           Play[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 }
 
 model GameCategory {
