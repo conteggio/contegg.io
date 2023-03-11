@@ -3,10 +3,12 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-    "preinstall": "npx only-allow pnpm",
+		"preinstall": "npx only-allow pnpm",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"start:prod": "node build",
+		"start:migrate:prod": "prisma migrate deploy && pnpm start:prod",
 		"test": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -16,7 +18,7 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.30.0",
-		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-node": "^1.2.2",
 		"@sveltejs/kit": "^1.5.6",
 		"@tailwindcss/line-clamp": "^0.4.2",
 		"@tailwindcss/typography": "^0.5.9",
@@ -51,7 +53,6 @@
 		"chart.js": "^4.2.1",
 		"daisyui": "^2.50.0",
 		"fast-xml-parser": "^4.1.2",
-		"sortable-tablesort": "^2.0.0",
 		"svelte-chartjs": "^3.1.2",
 		"svelte-portal": "^2.2.0"
 	}
