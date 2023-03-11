@@ -11,26 +11,29 @@ datasource db {
 }
 
 model Game {
-  id              Int            @id @default(autoincrement())
-  name            String
-  bggId           String?
-  bggName         String?
-  bggDescription  String?
-  bggYear         Int?
-  bggThumbnail    String?
-  bggImage        String?
-  bggMinPlayers   Int?
-  bggMaxPlayers   Int?
-  bggPlayingTime  Int?
-  bggMinAge       Int?
-  ruleNoPoints    Boolean        @default(false)
-  ruleHighestWins Boolean        @default(true)
-  ruleCooperative Boolean        @default(false)
-  ruleUsesTeams   Boolean        @default(false)
-  categories      GameCategory[]
-  plays           Play[]
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id                 Int            @id @default(autoincrement())
+  name               String
+  rating             Float?
+  notes              String         @default("")
+  bggId              String?
+  bggName            String?
+  bggDescription     String?
+  bggYear            Int?
+  bggThumbnail       String?
+  bggImage           String?
+  minPlayerCount     Int?
+  maxPlayerCount     Int?
+  minPlayTime        Int?
+  maxPlayTime        Int?
+  minAge             Int?
+  ruleHasNoPoints    Boolean        @default(false)
+  ruleHighestWins    Boolean        @default(true)
+  ruleIsCooperative  Boolean        @default(false)
+  ruleDefaultToTeams Boolean        @default(false)
+  categories         GameCategory[]
+  plays              Play[]
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
 }
 
 model GameCategory {
@@ -40,41 +43,67 @@ model GameCategory {
 }
 
 model Play {
-  id        Int          @id @default(autoincrement())
-  game      Game         @relation(fields: [gameId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  gameId    Int
-  sessions  Session[]
-  players   PlayerPlay[]
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-}
-
-model Session {
-  id         Int       @id @default(autoincrement())
-  play       Play      @relation(fields: [playId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  playId     Int
-  startedAt  DateTime  @default(now())
-  finishedAt DateTime?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id              Int          @id @default(autoincrement())
+  notes           String       @default("")
+  game            Game         @relation(fields: [gameId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  gameId          Int
+  location        Location?    @relation(fields: [locationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  locationId      Int?
+  players         PlayerPlay[]
+  durationMinutes Int?
+  rounds          Int?
+  ignore          Boolean      @default(false)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  roles           Role[]
 }
 
 model Player {
-  id        Int          @id @default(autoincrement())
-  name      String
-  plays     PlayerPlay[]
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  id          Int          @id @default(autoincrement())
+  name        String
+  notes       String       @default("")
+  bggUsername String?
+  plays       PlayerPlay[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model PlayerPlay {
-  player    Player   @relation(fields: [playerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  playerId  Int
-  play      Play     @relation(fields: [playId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  playId    Int
-  score     Float?   @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  player        Player   @relation(fields: [playerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  playerId      Int
+  play          Play     @relation(fields: [playId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  playId        Int
+  role          Role?    @relation(fields: [roleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  roleId        Int?
+  score         Float?
+  isWinner      Boolean  @default(false)
+  isNewPlayer   Boolean  @default(false)
+  isStartPlayer Boolean  @default(false)
+  seatOrder     Int?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@id([playerId, playId])
+}
+
+model Role {
+  id        Int          @id @default(autoincrement())
+  name      String
+  notes     String       @default("")
+  play      Play         @relation(fields: [playId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  playId    Int
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  players   PlayerPlay[]
+
+  @@unique([playId, name])
+}
+
+model Location {
+  id        Int      @id @default(autoincrement())
+  name      String
+  notes     String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  plays     Play[]
 }
