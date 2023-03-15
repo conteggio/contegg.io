@@ -6,7 +6,7 @@
 	import Heading from '$lib/components/Heading.svelte';
 	import PortalToRightDrawer from '$lib/components/PortalToRightDrawer.svelte';
 	import Portal from 'svelte-portal/src/Portal.svelte';
-	import { closeRightDrawer, rightDrawerContent } from '../../../stores';
+	import { closeRightDrawer, rightDrawerContent } from '$lib/stores';
 
 	/** @type {import('./$types').PageData} */
 	export let data;

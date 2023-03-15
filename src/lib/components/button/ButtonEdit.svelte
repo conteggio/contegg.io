@@ -1,5 +1,5 @@
 <script>
-	import { openRightDrawer } from '../../../stores';
+	import { openRightDrawer } from '$lib/stores';
 
 	/** @type {import('$lib/types').RightDrawerContent} */
 	export let content;

@@ -1,5 +1,5 @@
 <script>
-	import { rightDrawerContent, rightDrawerIsOpen } from '../../stores';
+	import { rightDrawerContent, rightDrawerIsOpen } from '$lib/stores';
 
 	// TODO: Type event correctly (missing event.target.checked)
 	/** @param {any} event */

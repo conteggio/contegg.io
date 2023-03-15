@@ -2,7 +2,7 @@
 	import Portal from 'svelte-portal/src/Portal.svelte';
 	import List from '$lib/components/list/List.svelte';
 	import { enhance } from '$app/forms';
-	import { rightDrawerContent, closeRightDrawer } from '../../../stores';
+	import { rightDrawerContent, closeRightDrawer } from '$lib/stores';
 	import PortalToRightDrawer from '$lib/components/PortalToRightDrawer.svelte';
 	import Heading from '$lib/components/Heading.svelte';
 	import ButtonEdit from '$lib/components/button/ButtonEdit.svelte';
