@@ -4,7 +4,7 @@ import prisma from '$lib/server/prisma';
 
 export const load = (async () => {
 	return {
-		title: 'Plays | contegg.io'
+		title: 'Plays'
 	};
 }) satisfies PageServerLoad;
 

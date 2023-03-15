@@ -28,7 +28,7 @@ export const load = (async ({ url }) => {
 	}
 
 	return {
-		title: 'Games | contegg.io',
+		title: 'Games',
 		games: await prisma.game.findMany({
 			where,
 			include: {

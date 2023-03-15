@@ -20,7 +20,7 @@ export const load = (async ({ params }) => {
 	return {
 		title: `${play.createdAt.toLocaleDateString()} - ${
 			play.game.name.length > 40 ? play.game.name.substring(0, 40) + '…' : play.game.name
-		} | contegg.io`,
+		}`,
 		play,
 		allPlayers: await prisma.player.findMany(),
 		players: await prisma.play.findPlayersWithScores(Number(params.id))

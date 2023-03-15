@@ -47,7 +47,7 @@ export const load = (async ({ params }) => {
 	const winRates = await prisma.player.getWinRates(Number(params.id));
 
 	return {
-		title: `${player.name} | contegg.io`,
+		title: player.name,
 		player,
 		plays,
 		wins,
