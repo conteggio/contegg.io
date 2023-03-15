@@ -6,9 +6,9 @@
 	export let data;
 </script>
 
-<div class="container px-6 py-12 sm:py-24 max-w-lg min-h-screen flex flex-col mx-auto">
+<div class="container px-6 py-12 2xl:py-24 max-w-xl min-h-screen flex flex-col mx-auto">
 	<OnboardingProgress title={$page.data.title} progressPercentage={$page.data.progressPercentage} />
-	<div class="flex-grow pt-24 flex flex-col">
+	<div class="flex-grow pt-12 2xl:pt-24 flex flex-col">
 		<slot />
 	</div>
 </div>
