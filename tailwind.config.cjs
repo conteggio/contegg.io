@@ -20,7 +20,9 @@ module.exports = {
 					info: '#2563EB',
 					success: '#c7eb74',
 					warning: '#f6f63b',
-					error: '#ae5154'
+					error: '#ae5154',
+
+					'--btn-text-case': 'capitalize' // set default text transform for buttons
 				}
 			}
 		]

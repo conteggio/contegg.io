@@ -11,7 +11,14 @@ datasource db {
 }
 
 model Game {
+  // Boilerplate
   id                 Int            @id @default(autoincrement())
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  importedId         Int?
+  importedUuid       String?
+  importedFrom       String?
+  // Model Specific
   name               String
   rating             Float?
   notes              String         @default("")
@@ -32,18 +39,27 @@ model Game {
   ruleDefaultToTeams Boolean        @default(false)
   categories         GameCategory[]
   plays              Play[]
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
 }
 
 model GameCategory {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  games Game[]
+  // Boilerplate
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Model Specific
+  name      String   @unique
+  games     Game[]
 }
 
 model Play {
+  // Boilerplate
   id              Int          @id @default(autoincrement())
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  importedId      Int?
+  importedUuid    String?
+  importedFrom    String?
+  // Model Specific
   notes           String       @default("")
   game            Game         @relation(fields: [gameId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   gameId          Int
@@ -53,22 +69,32 @@ model Play {
   durationMinutes Int?
   rounds          Int?
   ignore          Boolean      @default(false)
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
   roles           Role[]
 }
 
 model Player {
-  id          Int          @id @default(autoincrement())
-  name        String
-  notes       String       @default("")
-  bggUsername String?
-  plays       PlayerPlay[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  // Boilerplate
+  id           Int          @id @default(autoincrement())
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  importedId   Int?
+  importedUuid String?
+  importedFrom String?
+  // Model Specific
+  name         String
+  notes        String       @default("")
+  bggUsername  String?
+  plays        PlayerPlay[]
 }
 
 model PlayerPlay {
+  // Boilerplate
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  importedId    Int?
+  importedUuid  String?
+  importedFrom  String?
+  // Model Specific
   player        Player   @relation(fields: [playerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   playerId      Int
   play          Play     @relation(fields: [playId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -80,30 +106,35 @@ model PlayerPlay {
   isNewPlayer   Boolean  @default(false)
   isStartPlayer Boolean  @default(false)
   seatOrder     Int?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
 
   @@id([playerId, playId])
 }
 
 model Role {
+  // Boilerplate
   id        Int          @id @default(autoincrement())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  // Model Specific
   name      String
   notes     String       @default("")
   play      Play         @relation(fields: [playId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   playId    Int
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
   players   PlayerPlay[]
 
   @@unique([playId, name])
 }
 
 model Location {
-  id        Int      @id @default(autoincrement())
-  name      String
-  notes     String   @default("")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  plays     Play[]
+  // Boilerplate
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  importedId   Int?
+  importedUuid String?
+  importedFrom String?
+  // Model Specific
+  name         String
+  notes        String   @default("")
+  plays        Play[]
 }
